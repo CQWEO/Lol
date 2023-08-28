@@ -119,12 +119,12 @@ return isValid()
 end
 
 local function handleDescendant(descendant)
-local guidingLight = Instance.new("PointLight")
+local guidingLight = Instance.new("Part")
 if MARK_NEXT_DOOR and descendant.Name == "Door" and waitForAttribute(descendant, "RoomID", nextRoomId) then
-guidingLight.Range = 40
+guidingLight.Range = 5
 guidingLight.Color = Color3.fromRGB(255, 255, 255)
-guidingLight.Shadows = false
-guidingLight.Parent = descendant:WaitForChild("Door", 5)
+guidingLight.Shadows = true
+guidingLight.Parent = descendant:WaitForChild("Door", 7)
 elseif MARK_KEY_PICKUP and descendant.Name == "KeyObtain" and waitForAttribute(descendant, "LockID", nextRoomNumber) then
 local hitbox = descendant:WaitForChild("Hitbox", 5)
 local keyBase = hitbox and hitbox:WaitForChild("Key", 5)
@@ -403,7 +403,7 @@ end
 game.DescendantAdded:Connect(HandleLoot)
 
 for _, descendant in ipairs(game:GetDescendants()) do
-task.spawn(HandleLoot, descendant)
+task.spawn(HandleLoot,descendant)
 end
 
 --
